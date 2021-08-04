@@ -1,0 +1,16 @@
+User www www;
+error_log C:\Users\Пользователь\Desktop\Учеба\nginx.error_log info;
+http{
+include conf/mime.types;
+log_format simple '$remote_addr $request $status';
+server {
+    listen 80;
+    server_name localhost;
+    access_log C:\Users\Пользователь\Desktop\Учеба\nginx.access_log info;
+    location ^~ /uploads/ {
+        root /home/box/web/uploads;
+    }
+     location location ~* ^.+\.(jpg|jpeg|gif|png)$  {
+        root  /home/box/web/public;
+ }  
+}
