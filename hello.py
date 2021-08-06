@@ -5,5 +5,6 @@ def test (environ,start_response):
     ]
     start_response(status,headers)
     body = [bytes(i + '\n', 'ascii') for i in environ['QUERY_STRING'].split('&')]
-    return body
+    return iter(body,headers)
+
 
