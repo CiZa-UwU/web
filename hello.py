@@ -1,7 +1,11 @@
-def application(environ, start_response):
-    status = '200 OK'
-    headers = [('Content-Type', 'text/plain')]
-    body = bin([i + '\n' for i in environ['QUERY_STRING'].split('&')])
+def application(env, start_response):
 
-    start_response(status, headers)
-    return body
+    s1 = []
+    s2 =  env['QUERY_STRING'].split('&');
+
+    for s in s2:
+        s+= '\n'
+        s1.append(s.encode('utf-8'))
+
+    start_response('200 OK', [('Content-Type','text/plain')])
+    return s1
