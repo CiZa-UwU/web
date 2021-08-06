@@ -5,6 +5,6 @@ def test (environ,start_response):
     ]
     start_response(status,headers)
     body = [bytes(i + '\n', 'ascii') for i in environ['QUERY_STRING'].split('&')]
-    return iter(body.encode('utf-8'))
+    return iter(body)
     #Ввернуть заголовки, только хз как#
 
