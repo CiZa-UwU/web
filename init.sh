@@ -15,7 +15,3 @@ sudo python3 -m pip install mysqlclient
 sudo /etc/init.d/mysql start
 mysql -uroot -e "CREATE DATABASE stepic_web;"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON stepic_web.* TO 'box'@'localhost' WITH GRANT OPTION;"
-
-cd /home/box/web/ask/ask
-python3 manage.py makemigrations
-python3 manage.py migrate

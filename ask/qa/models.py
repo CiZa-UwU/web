@@ -15,6 +15,12 @@ class Question(models.Model):
     def get_url(self):
       return "/questions/{}/".format(self.id)
 
+class QuestionManager(models.Manager):
+  def new(self):
+    return self.order_by('-added_at')
+  def popular(self):
+    return self.order_by('-rating')
+
 class Answer(models.Model):
     text = models.TextField(default='')
     added_at = models.DateField(null=True)
@@ -23,10 +29,3 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
-
-class QuestionManager(models.Manager):
-  def new(self):
-    return self.order_by('-added_at')
-  def popular(self):
-    return self.order_by('-rating')
-    
