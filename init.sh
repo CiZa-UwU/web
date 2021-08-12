@@ -16,5 +16,6 @@ sudo /etc/init.d/mysql start
 mysql -uroot -e "CREATE DATABASE stepic_web;"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON stepic_web.* TO 'box'@'localhost' WITH GRANT OPTION;"
 
-python3 manage.py makemigrations qa
+cd /home/box/web/ask/ask
+python3 manage.py makemigrations
 python3 manage.py migrate
