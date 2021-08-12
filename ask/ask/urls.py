@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from qa import views
 from django.conf.urls import url, include
+from qa.views import question
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^ask/$', views.test),
     url(r'^popular/$', views.test),
     url(r'^new/$', views.test),
+    url(r'^(?P<num>\d+)/$', question),
 ]   

@@ -80,7 +80,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'stepic_web': BASE_DIR / 'db.sql',
+        'stepic_web': BASE_DIR / 'db.mysql',
     }
 }
 
