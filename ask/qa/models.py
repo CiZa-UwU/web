@@ -9,12 +9,11 @@ class Question(models.Model):
     author = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     likes = models.ManyToManyField(User,related_name="q_to_likes")
 
-    def get_url(self):
-      return "/questions/{}/".format(self.id)
-
     def __str__(self):
       return self.title
-
+    
+    def get_url(self):
+      return "/questions/{}/".format(self.id)
 
 class Answer(models.Model):
     text = models.TextField(default='')
