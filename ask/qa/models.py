@@ -23,4 +23,10 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+
+class QuestionManager(models.Manager):
+  def new(self):
+    return self.order_by('-added_at')
+  def popular(self):
+    return self.order_by('-rating')
     
