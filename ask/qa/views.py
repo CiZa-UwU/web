@@ -43,7 +43,7 @@ def popular(request) :
 	paginator = Paginator(qwests, pageLimit)
 	paginator.baseurl = '/?page='
 	page = paginator.page(page)
-	return render(request, 'list.html', {
+	return render(request, 'questionlist.html', {
 		'title' : 'popular quests',
 		'list' : page.object_list,
 		'paginator' : paginator, 
@@ -59,7 +59,7 @@ def question(request, quest_id) :
 	
 	title = 'qwest ' + quest_id
 
-	return render(request, 'question.html', {
+	return render(request, 'questionlist.html', {
 		'title' : title,
 		'question' : quest,
 		'list' : answers,
