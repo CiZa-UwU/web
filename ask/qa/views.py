@@ -29,7 +29,7 @@ def index(request):
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
     return render(request,'list.html',{
-        'title':'latest',
+        'title':Question.title,
         'paginator': paginator,
         'questions': page.object_list,
         'page': page,
@@ -42,7 +42,7 @@ def popular(request):
         page = 1
     except TypeError:
         page = 1
-    questions = Question.objects.all().order_by('-id')
+    questions = Question.objects.all().order_by('-rating')
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
     return render(request,'list.html',{
