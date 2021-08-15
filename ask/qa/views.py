@@ -31,7 +31,7 @@ def index(request):
     return render(request,'list.html',{
         'title':Question.title,
         'paginator': paginator,
-        'questions': page.object_list,
+        'questions': page.object_list.order_by('-id'),
         'page': page,
     })
 
