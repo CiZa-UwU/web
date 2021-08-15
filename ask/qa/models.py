@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Question(models.Model):
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(default="", max_length=1024)
     text = models.TextField(default="")
     added_at = models.DateTimeField(auto_now_add=True)
