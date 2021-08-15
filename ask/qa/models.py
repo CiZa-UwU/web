@@ -8,7 +8,7 @@ class QuestionManager(models.Manager):
     return self.order_by('-rating')
 
 class Question(models.Model):
-    object = QuestionManager()
+    objects = QuestionManager()
     title = models.CharField(default='', max_length=1024)
     text = models.TextField(default='')
     added_at = models.DateField(null=True)
@@ -16,7 +16,7 @@ class Question(models.Model):
     author = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     likes = models.ManyToManyField(User,related_name="q_to_likes")
     
-    def __str__(self):
+    def __str__(self):  
       return self.title
     
     def get_url(self):
