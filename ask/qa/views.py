@@ -1,3 +1,4 @@
+from ask.qa.models import QuestionManager
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
@@ -31,7 +32,7 @@ def index(request):
     return render(request,'list.html',{
         'title':Question.title,
         'paginator': paginator,
-        'questions': page.object_list.order_by('-pk'),
+        'questions': QuestionManager.new,
         'page': page,
     })
 
