@@ -1,23 +1,34 @@
-from django.conf.urls import url, include
-from django.contrib import admin
+# from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotFound
 
-from ask.views import found, not_found, init25
-from qa.views import index, popular, ask, login_view, signup
+# Create your views here.
 
-urlpatterns = [
 
-    url(r'^$', index),
+def found(request):
+    return HttpResponse("Found!")
 
-    url(r'^init25/', init25),
-    url(r'^login/', login_view),
-    url(r'^signup/', signup),
-    url(r'^ask/', ask),
-    # url(r'^answer/', answer),
-    url(r'^popular/', popular),
-    url(r'^new/', found),
+def not_found(request):
+    return HttpResponseNotFound("Not Found!")
 
-    url(r'^admin/', admin.site.urls),
-    url(r'^question/', include('qa.urls')),
 
-    url(r'^', not_found),
-]
+def init25(request):
+    import time
+    from django.contrib.auth.models import User
+    from django.db.models import Max
+    from qa.models import Question
+    from qa.models import Answer
+    res = Question.objects.all().aggregate(Max('rating'))
+    max_rating = res['rating__max'] or 0
+    user, _ = User.objects.get_or_create(username='test', password='test')
+    for i in range(30):
+        question = Question.objects.create(title='question ' + str(i), text='text ' + str(i),
+                                           author=user, rating=max_rating + i)
+    time.sleep(2)
+    question = Question.objects.create(title='question last', text='text', author=user)
+    question, _ = Question.objects.get_or_create(pk=3141592, title='question about pi',
+                                                 text='what is the last digit?', author=user)
+    question.answer_set.all().delete()
+    for i in range(10):
+        answer = Answer.objects.create(text='answer ' + str(i), question=question, author=user)
+
+    return HttpResponse("Init done!")
