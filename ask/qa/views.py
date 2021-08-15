@@ -1,23 +1,16 @@
-from ask.qa.models import QuestionManager
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from qa.models import Question
 
-def test(request, *args, **kwargs):
-    return HttpResponse('OK') 
-
-def question(request,num,title,text):
+def question(request, num,):
     try:
         q = Question.objects.get(id=num)
     except Question.DoesNotExist:
         raise Http404
-    return render(request,'question.html',
-    {
-    'question':q, 
-    'title':title,
-    'text':text
-    })
+    return render(request, 'question.html', {'question': q,
+                                              })
+
 
 def index(request):
     try:
@@ -26,15 +19,17 @@ def index(request):
         page = 1
     except TypeError:
         page = 1
-    questions = Question.objects.all().order_by('-pk')
+    questions = Question.objects.all().order_by('-id')
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
-    return render(request,'list.html',{
-        'title':Question.title,
-        'paginator': paginator,
-        'questions': QuestionManager.new,
-        'page': page,
-    })
+
+    return render(request, 'list.html',
+                  {'title': 'Latest',
+                   'paginator': paginator,
+                   'questions': page.object_list,
+                   'page': page,
+                    })
+
 
 def popular(request):
     try:
@@ -46,9 +41,10 @@ def popular(request):
     questions = Question.objects.all().order_by('-rating')
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
-    return render(request,'list.html',{
-        'title':'popular',
-        'paginator': paginator,
-        'questions': page.object_list,
-        'page': page,
-    })
+
+    return render(request, 'list.html',
+                  {'title': 'Popular',
+                   'paginator': paginator,
+                   'questions': page.object_list,
+                   'page': page,
+                    })
