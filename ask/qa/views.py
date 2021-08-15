@@ -25,13 +25,13 @@ def index(request):
         page = 1
     except TypeError:
         page = 1
-    questions = Question.objects.all().order_by('-id')
+    questions = Question.objects.all().order_by('-pk')
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
     return render(request,'list.html',{
         'title':Question.title,
         'paginator': paginator,
-        'questions': page.object_list.order_by('-id'),
+        'questions': page.object_list.order_by('-pk'),
         'page': page,
     })
 
