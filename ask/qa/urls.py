@@ -7,5 +7,5 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^popular/.*$', views.popular, name='popular'),    
-    url(r'^question/(?P<pk>\d+)/', question, name='question'),
+    url(r'^question/(?P<num>\d+)/', question, name='question'),
 ]

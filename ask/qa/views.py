@@ -7,7 +7,7 @@ from qa.forms import AnswerForm
 
 # Create your views here.
 
-def question(request,num,):
+def question(request,num):
     try:
         q = Question.objects.get(id=num)
     except Question.DoesNotExist:
@@ -22,6 +22,8 @@ def question(request,num,):
     else:
         form = AnswerForm(initial={'question': q.id})
     return render(request, 'question.html', {'question': q,
+                                             'form': form,
+                                             'user': request.user,
                                               })
 
 
