@@ -3,26 +3,36 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
 
 from qa.models import Question, Answer
+from qa.forms import AnswerForm
 
 # Create your views here.
 
-def question(request, num,):
+def question(request,num,):
     try:
         q = Question.objects.get(id=num)
     except Question.DoesNotExist:
         raise Http404
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form._user = request.user
+            _ = form.save()
+            url = q.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm(initial={'question': q.id})
     return render(request, 'question.html', {'question': q,
                                               })
 
 
-def index(request,**args):
+def index(request):
     try:
         page = int(request.GET.get("page"))
     except ValueError:
         page = 1
     except TypeError:
         page = 1
-    questions = Question.objects.all().order_by('-addet_at')
+    questions = Question.objects.all().order_by('-id')
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
 
@@ -33,7 +43,7 @@ def index(request,**args):
                    'page': page,
 				  })
 
-def popular(request,**args):
+def popular(request):
     try:
         page = int(request.GET.get("page"))
     except ValueError:
