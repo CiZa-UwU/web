@@ -8,7 +8,7 @@ def test(request, *args, **kwargs):
 def index(request) :
 	pageLimit = 10
 	#Entry.objects.order_by(Coalesce('summary', 'headline').desc()) #asc()
-	qwests = Question.objects.all().order_by('-id')
+	qwests = Question.objects.all().order_by('-added_at')
 	
 	from django.core.paginator import Paginator
 	
@@ -31,7 +31,7 @@ def index(request) :
 def popular(request) :
 	pageLimit = 10
 	#Entry.objects.order_by(Coalesce('summary', 'headline').desc()) #asc()
-	qwests = Question.objects.all().order_by('-likes')
+	qwests = Question.objects.all().order_by('-raiting')
 	
 	from django.core.paginator import Paginator
 	
