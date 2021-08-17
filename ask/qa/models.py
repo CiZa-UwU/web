@@ -1,4 +1,4 @@
-from qa.forms import AskForm
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -16,8 +16,7 @@ class Question(models.Model):
         return self.title
 
     def get_url(self):
-        return reverse('question', kwargs={'question_id': self.pk})
-
+        return "/question/{}/".format(self.id)
 
 class Answer(models.Model):
     text = models.TextField(default="")

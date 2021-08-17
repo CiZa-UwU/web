@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import Question, Answer
+from qa.models import Question, Answer
 
 class AskForm(forms.Form):
     title = forms.CharField(max_length=100)
