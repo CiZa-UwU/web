@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
+from django.urls import reverse
 from qa.models import Question, Answer
 from qa.forms import AnswerForm, AskForm
 
@@ -69,8 +70,8 @@ def ask(request):
         if form.is_valid():
             form._user = request.user
             post = form.save
-            url = post.get_url()
-            return HttpResponseRedirect(url)
+            #url = post.get_url()
+            return HttpResponseRedirect(reverse('question', args=[post.question.id]))
     else:
         form = AskForm
     return render(request,'ask.html',{'form': form,
