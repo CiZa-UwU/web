@@ -1,7 +1,7 @@
-from ask.qa.forms import AskForm
+from qa.forms import AskForm
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 # Create your models here.
 
 class Question(models.Model):
@@ -16,7 +16,7 @@ class Question(models.Model):
         return self.title
 
     def get_url(self):
-        return "/question/{}/".format(self.id)
+        return reverse('question', kwargs={'question_id': self.pk})
 
 
 class Answer(models.Model):
@@ -27,6 +27,3 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
-   
-    def get_url(self):
-        return "/ask/{}/".format(self.id)

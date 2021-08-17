@@ -1,3 +1,4 @@
+from _typeshed import Self
 from ask.qa import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
@@ -70,7 +71,7 @@ def ask(request):
         if form.is_valid():
             form._user = request.user
             post = form.save
-            url = Answer.get_url()
+            url = Question.get_url()
             return HttpResponseRedirect(url)
     else:
         form = AskForm
