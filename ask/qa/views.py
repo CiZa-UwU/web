@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
 
 from qa.models import Question, Answer
-from qa.forms import AnswerForm
+from qa.forms import AnswerForm, AskForm
 
 # Create your views here.
 
@@ -62,3 +62,17 @@ def popular(request):
                    'questions': page.object_list,
                    'page': page,
                     })
+
+def ask(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            form._user = request.user
+            post = form.save
+            url = post.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm
+    return render(request,'ask.html',{'form': form,
+                                      'user':request.user,
+                                      })
