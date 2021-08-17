@@ -1,6 +1,6 @@
+from ask.qa.forms import AskForm
 from django.db import models
 from django.contrib.auth.models import User
-
 
 # Create your models here.
 
@@ -27,3 +27,6 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+   
+    def get_url(self):
+        return "/ask/{}/".format(self.id)

@@ -1,3 +1,4 @@
+from ask.qa import forms
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, Http404
 from django.core.paginator import Paginator
@@ -69,7 +70,7 @@ def ask(request):
         if form.is_valid():
             form._user = request.user
             post = form.save
-            url = post.get_url()
+            url = Answer.get_url()
             return HttpResponseRedirect(url)
     else:
         form = AskForm
