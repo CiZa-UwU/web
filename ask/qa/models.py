@@ -5,6 +5,7 @@ from django.urls import reverse
 # Create your models here.
 
 class Question(models.Model):
+    pk = models.IntegerField(primary_key = True)
     title = models.CharField(default="", max_length=1024)
     text = models.TextField(default="")
     added_at = models.DateTimeField(auto_now_add=True)
@@ -16,7 +17,7 @@ class Question(models.Model):
         return self.title
 
     def get_url(self):
-        return "/question/{}/".format(self.id)
+        return "/question/{}/".format(self.pk)
 
 class Answer(models.Model):
     text = models.TextField(default="")

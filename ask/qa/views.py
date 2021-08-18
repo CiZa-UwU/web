@@ -8,9 +8,9 @@ from qa.forms import AnswerForm, AskForm
 
 # Create your views here.
 
-def question(request,num):
+def question(request,pk):
     try:
-        q = Question.objects.get(id=num)
+        q = Question.objects.get(id=pk)
     except Question.DoesNotExist:
         raise Http404
     if request.method == "POST":
@@ -18,8 +18,8 @@ def question(request,num):
         if form.is_valid():
             form._user = request.user
             _ = form.save()
-            url = "/question/{}/".format(q.id)
-        return HttpResponseRedirect(url)
+            url = q.get_url()
+            return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question': q.id})
     return render(request, 'question.html', {'question': q,
@@ -35,7 +35,7 @@ def index(request):
         page = 1
     except TypeError:
         page = 1
-    questions = Question.objects.all().order_by('-id')
+    questions = Question.objects.all().order_by('-pk')
     paginator = Paginator(questions, 10)
     page = paginator.page(page)
 
@@ -70,10 +70,10 @@ def ask(request):
         if form.is_valid():
             form._user = request.user
             post = form.save()
-            url = "/question/{}/".format(post.id)
+            url = post.get_url()
             return HttpResponseRedirect(url)
     else:
-        form = AskForm
+        form = AskForm()
     return render(request,'ask.html',{'form': form,
                                       'user':request.user,
                                       })
