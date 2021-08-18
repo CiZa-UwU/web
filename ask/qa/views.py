@@ -18,8 +18,8 @@ def question(request,num):
         if form.is_valid():
             form._user = request.user
             _ = form.save()
-            url = q.get_url()
-            return HttpResponseRedirect(url)
+            url = "/question/{}/".format(q.id)
+        return HttpResponseRedirect(url)
     else:
         form = AnswerForm(initial={'question': q.id})
     return render(request, 'question.html', {'question': q,
